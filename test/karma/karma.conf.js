@@ -86,7 +86,11 @@ module.exports = function( config ) {
 		captureTimeout: 3e5,
 		browserNoActivityTimeout: 3e5,
 		browserDisconnectTimeout: 3e5,
-		browserDisconnectTolerance: 3
+		browserDisconnectTolerance: 3,
+
+		// Support: Android Browser <4.4
+		// Tunnel is set up manually in .travis.yml; that helps for Android Browser testing.
+		startTunnel: false
 	});
 
 	// Deal with Travis environment
