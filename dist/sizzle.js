@@ -1,3 +1,7 @@
+/**
+ * Includes several Skuid modifications, all of which should be annotated by:
+ * @author Skuid
+ */
 /*!
  * Sizzle CSS Selector Engine v2.3.3
  * https://sizzlejs.com/
@@ -6,9 +10,20 @@
  * Released under the MIT license
  * http://jquery.org/license
  *
- * Date: 2016-08-08
+ * Date: 2018-08-22
  */
 (function( window ) {
+
+//----------------------------------------------------------
+/**
+ * @author Skuid
+ * Improves the performance of Skuid,
+ * which uses jQuery both for HTML and XML documents
+ * and frequently switches between the two of them
+ */
+var htmlDocCache;
+var xmlDocCache;
+//----------------------------------------------------------
 
 var i,
 	support,
@@ -581,6 +596,36 @@ setDocument = Sizzle.setDocument = function( node ) {
 	docElem = document.documentElement;
 	documentIsHTML = !isXML( document );
 
+	//----------------------------------------------------------
+	/**
+	 * @author Skuid
+	 * Separate branches for different doc types improves the performance of SKuid
+	 */
+	if (documentIsHTML) {
+		if (htmlDocCache) {
+			support = htmlDocCache.support;
+			Expr = htmlDocCache.Expr;
+			rbuggyMatches = htmlDocCache.rbuggyMatches;
+			rbuggyQSA = htmlDocCache.rbuggyQSA;
+			hasCompare = htmlDocCache.hasCompare;
+			contains = htmlDocCache.contains;
+			sortOrder = htmlDocCache.sortOrder;
+			return doc;
+		}
+	} else {
+		if (xmlDocCache) {
+			support = xmlDocCache.support;
+			Expr = xmlDocCache.Expr;
+			rbuggyMatches = xmlDocCache.rbuggyMatches;
+			rbuggyQSA = xmlDocCache.rbuggyQSA;
+			hasCompare = xmlDocCache.hasCompare;
+			contains = xmlDocCache.contains;
+			sortOrder = xmlDocCache.sortOrder;
+			return doc;
+		}
+	}
+	//----------------------------------------------------------
+
 	// Support: IE 9-11, Edge
 	// Accessing iframe documents after unload throws "permission denied" errors (jQuery #13936)
 	if ( preferredDoc !== document &&
@@ -967,6 +1012,34 @@ setDocument = Sizzle.setDocument = function( node ) {
 			bp[i] === preferredDoc ? 1 :
 			0;
 	};
+
+	//----------------------------------------------------------
+	/**
+	 * @author Skuid
+	 * Separate branches for different doc types improves the performance of SKuid
+	 */
+	if (documentIsHTML) {
+		htmlDocCache = {
+			support : support,
+			Expr : Expr,
+			rbuggyMatches : rbuggyMatches,
+			rbuggyQSA : rbuggyQSA,
+			hasCompare : hasCompare,
+			contains : contains,
+			sortOrder: sortOrder
+		};
+	} else {
+		xmlDocCache = {
+			support : support,
+			Expr : Expr,
+			rbuggyMatches : rbuggyMatches,
+			rbuggyQSA : rbuggyQSA,
+			hasCompare : hasCompare,
+			contains : contains,
+			sortOrder: sortOrder
+		};
+	}
+	//----------------------------------------------------------
 
 	return document;
 };
