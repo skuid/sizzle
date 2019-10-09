@@ -10,7 +10,7 @@
  * Released under the MIT license
  * http://jquery.org/license
  *
- * Date: 2018-08-22
+ * Date: 2019-10-09
  */
 (function( window ) {
 
