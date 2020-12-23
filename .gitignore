@@ -7,3 +7,8 @@
 .DS_Store
 node_modules
 bower_components
+.idea/
+
+# Ignore everything in dist folder except for eslint config
+/dist/*
+!/dist/.eslintrc.json

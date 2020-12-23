@@ -41,7 +41,7 @@ Oleg Gaidarenko <markelog@gmail.com>
 Dan Burzo <danburzo@gmail.com>
 Goare Mao <mygoare@gmail.com>
 Dongseok Paeng <dongseok83.paeng@lge.com>
-Michał Gołębiowski <m.goleb@gmail.com>
+Michał Gołębiowski-Owczarek <m.goleb@gmail.com>
 Philip Jägenstedt <philip@foolip.org>
 Chris Antaki <ChrisAntaki@gmail.com>
 Benjamin Tan <demoneaux@gmail.com>
@@ -58,3 +58,10 @@ Tom von Clef <thomas.vonclef@gmail.com>
 Josh Soref <apache@soref.com>
 Saptak Sengupta <saptak013@gmail.com>
 Jon Dufresne <jon.dufresne@gmail.com>
+Andrey Meshkov <ay.meshkov@gmail.com>
+Sébastien Règne <regseb@users.noreply.github.com>
+Andrey Meshkov <am@adguard.com>
+Siddharth Dungarwal <sd5869@gmail.com>
+wartmanm <3869625+wartmanm@users.noreply.github.com>
+Hoang <dangkyokhoang@gmail.com>
+JuanMa Ruiz <ruizjuanma@gmail.com>
