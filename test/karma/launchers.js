@@ -8,33 +8,33 @@ module.exports = {
 		os: "OS X",
 		os_version: "Mavericks"
 	},
-	"bs_firefox-38": {
+	"bs_firefox-52": {
 		base: "BrowserStack",
 		browser: "firefox",
-		browser_version: "38.0",
+		browser_version: "52.0",
 		os: "OS X",
-		os_version: "Mavericks"
+		os_version: "Sierra"
 	},
-	"bs_firefox-45": {
+	"bs_firefox-60": {
 		base: "BrowserStack",
 		browser: "firefox",
-		browser_version: "45.0",
+		browser_version: "60.0",
 		os: "OS X",
-		os_version: "Mavericks"
+		os_version: "High Sierra"
 	},
-	"bs_firefox-46": {
+	"bs_firefox-68": {
 		base: "BrowserStack",
 		browser: "firefox",
-		browser_version: "46.0",
+		browser_version: "68.0",
 		os: "OS X",
-		os_version: "El Capitan"
+		os_version: "Mojave"
 	},
-	"bs_firefox-47": {
+	"bs_firefox-69": {
 		base: "BrowserStack",
 		browser: "firefox",
-		browser_version: "47.0",
+		browser_version: "69.0",
 		os: "OS X",
-		os_version: "El Capitan"
+		os_version: "Mojave"
 	},
 
 	"bs_chrome-16": {
@@ -44,32 +44,53 @@ module.exports = {
 		os: "OS X",
 		os_version: "Mavericks"
 	},
-	"bs_chrome-24": {
+	"bs_chrome-45": {
 		base: "BrowserStack",
 		browser: "chrome",
-		browser_version: "24.0",
+		browser_version: "45.0",
 		os: "OS X",
-		os_version: "Mavericks"
+		os_version: "Sierra"
 	},
-	"bs_chrome-50": {
+	"bs_chrome-76": {
 		base: "BrowserStack",
 		browser: "chrome",
-		browser_version: "50.0",
+		browser_version: "76.0",
 		os: "OS X",
-		os_version: "El Capitan"
+		os_version: "Mojave"
 	},
-	"bs_chrome-51": {
+	"bs_chrome-77": {
 		base: "BrowserStack",
 		browser: "chrome",
-		browser_version: "51.0",
+		browser_version: "77.0",
 		os: "OS X",
-		os_version: "El Capitan"
+		os_version: "Mojave"
 	},
 
-	"bs_edge-13": {
+	"bs_edge-15": {
 		base: "BrowserStack",
 		browser: "edge",
-		browser_version: "13.0",
+		browser_version: "15.0",
+		os: "Windows",
+		os_version: "10"
+	},
+	"bs_edge-16": {
+		base: "BrowserStack",
+		browser: "edge",
+		browser_version: "16.0",
+		os: "Windows",
+		os_version: "10"
+	},
+	"bs_edge-17": {
+		base: "BrowserStack",
+		browser: "edge",
+		browser_version: "17.0",
+		os: "Windows",
+		os_version: "10"
+	},
+	"bs_edge-18": {
+		base: "BrowserStack",
+		browser: "edge",
+		browser_version: "18.0",
 		os: "Windows",
 		os_version: "10"
 	},
@@ -131,19 +152,19 @@ module.exports = {
 		os: "Windows",
 		os_version: "7"
 	},
-	"bs_opera-37": {
+	"bs_opera-63": {
 		base: "BrowserStack",
 		browser: "opera",
-		browser_version: "37.0",
+		browser_version: "63.0",
 		os: "OS X",
-		os_version: "El Capitan"
+		os_version: "Mojave"
 	},
-	"bs_opera-38": {
+	"bs_opera-64": {
 		base: "BrowserStack",
 		browser: "opera",
-		browser_version: "38.0",
+		browser_version: "64.0",
 		os: "OS X",
-		os_version: "El Capitan"
+		os_version: "Mojave"
 	},
 
 	"bs_safari-4.0": {
@@ -188,6 +209,27 @@ module.exports = {
 		os: "OS X",
 		os_version: "El Capitan"
 	},
+	"bs_safari-10.1": {
+		base: "BrowserStack",
+		browser: "safari",
+		browser_version: "10.1",
+		os: "OS X",
+		os_version: "Sierra"
+	},
+	"bs_safari-11.1": {
+		base: "BrowserStack",
+		browser: "safari",
+		browser_version: "11.1",
+		os: "OS X",
+		os_version: "High Sierra"
+	},
+	"bs_safari-12.1": {
+		base: "BrowserStack",
+		browser: "safari",
+		browser_version: "12.1",
+		os: "OS X",
+		os_version: "Mojave"
+	},
 
 	"bs_ios-5.1": {
 		base: "BrowserStack",
@@ -218,6 +260,27 @@ module.exports = {
 		device: "iPhone 6S",
 		os: "ios",
 		os_version: "9.3"
+	},
+	"bs_ios-10.3": {
+		base: "BrowserStack",
+		device: "iPhone 7",
+		os: "ios",
+		os_version: "10.3",
+		real_mobile: true
+	},
+	"bs_ios-11.4": {
+		base: "BrowserStack",
+		device: "iPhone 6S",
+		os: "ios",
+		os_version: "11.4",
+		real_mobile: true
+	},
+	"bs_ios-12.2": {
+		base: "BrowserStack",
+		device: "iPhone XS",
+		os: "ios",
+		os_version: "12.2",
+		real_mobile: true
 	},
 
 	"bs_android-2.3": {

@@ -20,7 +20,7 @@ module.exports = function( grunt ) {
 		files = {
 			source: "src/sizzle.js",
 			speed: "speed/speed.js",
-			tests: "test/unit/*.js",
+			tests: "test/{data,unit}/*.js",
 			karma: "test/karma/*.js",
 			grunt: [ "Gruntfile.js", "tasks/*" ]
 		};
@@ -31,22 +31,26 @@ module.exports = function( grunt ) {
 		// See https://github.com/jquery/sizzle/wiki/Sizzle-Documentation#browsers
 
 		browsers.desktop = [
-			"bs_chrome-50", "bs_chrome-51",
+			"bs_chrome-45", // shares V8 with Node.js 4 LTS
+			"bs_chrome-76", "bs_chrome-77",
 
-			"bs_firefox-38", "bs_firefox-45", // Firefox ESR
-			"bs_firefox-46", "bs_firefox-47",
+			"bs_firefox-52", "bs_firefox-60", // Firefox ESR
+			"bs_firefox-68", "bs_firefox-69",
 
-			"bs_edge-13",
+			"bs_edge-15", "bs_edge-16", "bs_edge-17", "bs_edge-18",
 
 			"bs_ie-9", "bs_ie-10", "bs_ie-11",
 
-			"bs_opera-37", "bs_opera-38",
+			"bs_opera-63", "bs_opera-64",
 
 			// Real Safari 6.1 and 7.0 are not available
-			"bs_safari-6.0", "bs_safari-8.0", "bs_safari-9.1"
+			"bs_safari-6.0", "bs_safari-8.0", "bs_safari-9.1", "bs_safari-10.1",
+			"bs_safari-11.1", "bs_safari-12.1"
 		];
 
-		browsers.ios = [ "bs_ios-5.1", "bs_ios-6.0", "bs_ios-7.0", "bs_ios-8.3", "bs_ios-9.3" ];
+		browsers.ios = [
+			"bs_ios-9.3", "bs_ios-10.3", "bs_ios-11.4", "bs_ios-12.2"
+		];
 		browsers.android = [
 			"bs_android-4.0", "bs_android-4.1", "bs_android-4.2",
 			"bs_android-4.3", "bs_android-4.4"
@@ -54,16 +58,17 @@ module.exports = function( grunt ) {
 
 		browsers.old = {
 			firefox: [ "bs_firefox-3.6" ],
-			chrome: [ "bs_chrome-16", "bs_chrome-24" ],
+			chrome: [ "bs_chrome-16" ],
 			safari: [ "bs_safari-4.0", "bs_safari-5.0", "bs_safari-5.1" ],
 			ie: [ "bs_ie-7", "bs_ie-8" ],
 			opera: [ "bs_opera-11.6", "bs_opera-12.16" ],
+			ios: [ "bs_ios-5.1", "bs_ios-6.0", "bs_ios-7.0", "bs_ios-8.3" ],
 			android: [ "bs_android-2.3" ]
 		};
 	}
 
 	// Project configuration
-	grunt.initConfig({
+	grunt.initConfig( {
 		pkg: grunt.file.readJSON( "package.json" ),
 		dateString: new Date().toISOString().replace( /\..*Z/, "" ),
 		compile: {
@@ -85,11 +90,13 @@ module.exports = function( grunt ) {
 						"hoist_funs": false,
 						loops: false
 					},
+					output: {
+						ascii_only: true
+					},
 					banner: "/*! Sizzle v<%= pkg.version %> | (c) " +
-						"jQuery Foundation, Inc. | jquery.org/license */",
+						"JS Foundation and other contributors | js.foundation */",
 					sourceMap: true,
-					sourceMapName: "dist/sizzle.min.map",
-					ASCIIOnly: true
+					sourceMapName: "dist/sizzle.min.map"
 				}
 			}
 		},
@@ -123,37 +130,35 @@ module.exports = function( grunt ) {
 					"qunit/qunit.css": "qunitjs/qunit/qunit.css",
 					"qunit/LICENSE.txt": "qunitjs/LICENSE.txt",
 
-					"requirejs/require.js": "requirejs/require.js"
+					"requirejs/require.js": "requirejs/require.js",
+					"requirejs-domready/domReady.js": "requirejs-domready/domReady.js",
+					"requirejs-text/text.js": "requirejs-text/text.js"
 				}
 			}
 		},
-		jshint: {
+		eslint: {
 			options: {
-				jshintrc: true
+
+				// See https://github.com/sindresorhus/grunt-eslint/issues/119
+				quiet: true
 			},
-			all: {
+
+			dist: {
+				src: "dist/sizzle.js"
+			},
+			dev: {
 				src: [ files.source, files.grunt, files.karma, files.speed, files.tests ]
-			}
-		},
-		jscs: {
-			src: {
-				options: {
-					requireDotNotation: null
-				},
-				src: [ files.source ]
 			},
-			grunt: files.grunt,
-			speed: [ files.speed ],
+			grunt: {
+				src: files.grunt
+			},
+			speed: {
+				src: [ files.speed ]
+			},
 			tests: {
-				options: {
-					maximumLineLength: null
-				},
 				src: [ files.tests ]
 			},
 			karma: {
-				options: {
-					requireCamelCaseOrUpperCaseIdentifiers: null
-				},
 				src: [ files.karma ]
 			}
 		},
@@ -210,11 +215,12 @@ module.exports = function( grunt ) {
 			oldAndroid: {
 				browsers: browsers.old.android
 			},
+			oldIos: {
+				browsers: browsers.old.ios
+			},
 			all: {
 				browsers: browsers.phantom.concat(
 					browsers.desktop,
-					browsers.ios,
-					browsers.android,
 
 					browsers.old.firefox,
 					browsers.old.chrome,
@@ -222,6 +228,10 @@ module.exports = function( grunt ) {
 					browsers.old.ie,
 					browsers.old.opera,
 
+					browsers.ios,
+					browsers.android,
+
+					browsers.old.ios,
 					browsers.old.android
 				)
 			}
@@ -241,7 +251,7 @@ module.exports = function( grunt ) {
 			],
 			tasks: [ "build", "karma:watch:run" ]
 		}
-	});
+	} );
 
 	// Integrate Sizzle specific tasks
 	grunt.loadTasks( "tasks" );
@@ -249,25 +259,27 @@ module.exports = function( grunt ) {
 	// Load dev dependencies
 	require( "load-grunt-tasks" )( grunt );
 
-	grunt.registerTask( "lint", [ "jsonlint", "jshint", "jscs" ] );
+	grunt.registerTask( "lint", [ "jsonlint", "eslint:dev", "eslint:dist" ] );
 	grunt.registerTask( "start", [ "karma:watch:start", "watch" ] );
 
-	// Execute tests all browsers in sequential way,
-	// so slow connections would not affect other runs
-	grunt.registerTask( "tests", isBrowserStack ? [
-		"karma:phantom", "karma:desktop",
+	grunt.registerTask( "tests", [
+		`karma-tests:${ isBrowserStack ? "browserstack" : "" }`
+	] );
 
-		"karma:ios",
-
-		"karma:oldIe", "karma:oldFirefox", "karma:oldChrome",
-		"karma:oldSafari", "karma:oldOpera"
-
-		// See #314 :-(
-		// "karma:android", "karma:oldAndroid"
-	] : "karma:phantom" );
-
-	grunt.registerTask( "build", [ "lint", "compile", "uglify", "dist", "ensure_ascii" ] );
-	grunt.registerTask( "default", [ "build", "tests", "compare_size" ] );
+	grunt.registerTask( "build", [
+		"jsonlint",
+		"eslint:dev",
+		"compile",
+		"uglify",
+		"dist",
+		"eslint:dist",
+		"ensure_ascii"
+	] );
+	grunt.registerTask( "default", [
+		"build",
+		"compare_size",
+		"eslint:dist"
+	] );
 
 	grunt.registerTask( "bower", "bowercopy" );
 };

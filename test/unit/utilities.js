@@ -11,7 +11,7 @@ function testAttr( doc, assert ) {
 	} else {
 		// Set checked on creation by creating with a fragment
 		// See https://jsfiddle.net/8sVgA/1/show/light in oldIE
-		el = jQuery( "<input type='checkbox' checked='checked' />" )[0];
+		el = jQuery( "<input type='checkbox' checked='checked' />" )[ 0 ];
 	}
 
 	// Set it again for good measure
@@ -36,21 +36,21 @@ function testAttr( doc, assert ) {
 		"Gecko Object.prototype property \"watch\"" );
 }
 
-QUnit.test("Sizzle.attr (HTML)", function( assert ) {
+QUnit.test( "Sizzle.attr (HTML)", function( assert ) {
 	testAttr( null, assert );
-});
+} );
 
-QUnit.test("Sizzle.attr (XML)", function( assert ) {
+QUnit.test( "Sizzle.attr (XML)", function( assert ) {
 	testAttr( jQuery.parseXML( "<root/>" ), assert );
-});
+} );
 
-QUnit.test("Sizzle.escape", function( assert ) {
+QUnit.test( "Sizzle.escape", function( assert ) {
 
 	// Edge cases
 	assert.equal( Sizzle.escape(), "undefined", "Converts undefined to string" );
-	assert.equal( Sizzle.escape("-"), "\\-", "Escapes standalone dash" );
-	assert.equal( Sizzle.escape("-a"), "-a", "Doesn't escape leading dash followed by non-number" );
-	assert.equal( Sizzle.escape("--"), "--", "Doesn't escape standalone double dash" );
+	assert.equal( Sizzle.escape( "-" ), "\\-", "Escapes standalone dash" );
+	assert.equal( Sizzle.escape( "-a" ), "-a", "Doesn't escape leading dash followed by non-number" );
+	assert.equal( Sizzle.escape( "--" ), "--", "Doesn't escape standalone double dash" );
 	assert.equal( Sizzle.escape( "\uFFFD" ), "\uFFFD",
 		"Doesn't escape standalone replacement character" );
 	assert.equal( Sizzle.escape( "a\uFFFD" ), "a\uFFFD",
@@ -148,55 +148,116 @@ QUnit.test("Sizzle.escape", function( assert ) {
 	// Lone surrogates
 	assert.equal( Sizzle.escape( "\uDF06" ), "\uDF06", "Doesn't escape lone low surrogate" );
 	assert.equal( Sizzle.escape( "\uD834" ), "\uD834", "Doesn't escape lone high surrogate" );
-});
+} );
 
-QUnit.test("Sizzle.contains", function( assert ) {
+QUnit.test( "Sizzle.contains", function( assert ) {
 	assert.expect( 16 );
 
-	var container = document.getElementById("nonnodes"),
+	var container = document.getElementById( "nonnodes" ),
 		element = container.firstChild,
 		text = element.nextSibling,
 		nonContained = container.nextSibling,
-		detached = document.createElement("a");
+		detached = document.createElement( "a" );
 	assert.ok( element && element.nodeType === 1, "preliminary: found element" );
 	assert.ok( text && text.nodeType === 3, "preliminary: found text" );
 	assert.ok( nonContained, "preliminary: found non-descendant" );
-	assert.ok( Sizzle.contains(container, element), "child" );
-	assert.ok( Sizzle.contains(container.parentNode, element), "grandchild" );
-	assert.ok( Sizzle.contains(container, text), "text child" );
-	assert.ok( Sizzle.contains(container.parentNode, text), "text grandchild" );
-	assert.ok( !Sizzle.contains(container, container), "self" );
-	assert.ok( !Sizzle.contains(element, container), "parent" );
-	assert.ok( !Sizzle.contains(container, nonContained), "non-descendant" );
-	assert.ok( !Sizzle.contains(container, document), "document" );
-	assert.ok( !Sizzle.contains(container, document.documentElement), "documentElement (negative)" );
-	assert.ok( !Sizzle.contains(container, null), "Passing null does not throw an error" );
-	assert.ok( Sizzle.contains(document, document.documentElement), "documentElement (positive)" );
-	assert.ok( Sizzle.contains(document, element), "document container (positive)" );
-	assert.ok( !Sizzle.contains(document, detached), "document container (negative)" );
-});
+	assert.ok( Sizzle.contains( container, element ), "child" );
+	assert.ok( Sizzle.contains( container.parentNode, element ), "grandchild" );
+	assert.ok( Sizzle.contains( container, text ), "text child" );
+	assert.ok( Sizzle.contains( container.parentNode, text ), "text grandchild" );
+	assert.ok( !Sizzle.contains( container, container ), "self" );
+	assert.ok( !Sizzle.contains( element, container ), "parent" );
+	assert.ok( !Sizzle.contains( container, nonContained ), "non-descendant" );
+	assert.ok( !Sizzle.contains( container, document ), "document" );
+	assert.ok( !Sizzle.contains( container, document.documentElement ), "documentElement (negative)" );
+	assert.ok( !Sizzle.contains( container, null ), "Passing null does not throw an error" );
+	assert.ok( Sizzle.contains( document, document.documentElement ), "documentElement (positive)" );
+	assert.ok( Sizzle.contains( document, element ), "document container (positive)" );
+	assert.ok( !Sizzle.contains( document, detached ), "document container (negative)" );
+} );
 
 if ( jQuery( "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='1' width='1'><g/></svg>"
 	)[ 0 ].firstChild ) {
 
-	QUnit.test("Sizzle.contains in SVG (jQuery #10832)", function( assert ) {
+	QUnit.test( "Sizzle.contains in SVG (jQuery #10832)", function( assert ) {
 		assert.expect( 4 );
 
 		var svg = jQuery(
 			"<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='1' width='1'>" +
 				"<g><circle cx='1' cy='1' r='1' /></g>" +
 			"</svg>"
-		).appendTo("#qunit-fixture")[0];
+		).appendTo( "#qunit-fixture" )[ 0 ];
 
 		assert.ok( Sizzle.contains( svg, svg.firstChild ), "root child" );
 		assert.ok( Sizzle.contains( svg.firstChild, svg.firstChild.firstChild ), "element child" );
 		assert.ok( Sizzle.contains( svg, svg.firstChild.firstChild ), "root granchild" );
 		assert.ok( !Sizzle.contains( svg.firstChild.firstChild, svg.firstChild ),
 			"parent (negative)" );
-	});
+	} );
 }
 
-QUnit.test("Sizzle.uniqueSort", function( assert ) {
+QUnit.test( "Sizzle.isXML", function( assert ) {
+	assert.expect( 10 );
+
+	var svgTree,
+		xmlTree = jQuery.parseXML( "<docElem><elem/></docElem>" ).documentElement,
+		htmlTree = jQuery( "<div>" +
+			"<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='1' width='1'>" +
+			"<desc></desc>" +
+			"</svg>" +
+			"</div>"
+		)[ 0 ],
+		supportsSVG = /svg/i.test( htmlTree.firstChild.namespaceURI );
+
+	// Support: IE<=8
+	// Omit the SVG DOCTYPE if it is not understood
+	try {
+		svgTree = jQuery.parseXML(
+			"<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" " +
+				"\"http://www.w3.org/Gaphics/SVG/1.1/DTD/svg11.dtd\">" +
+			"<svg version='1.1' xmlns='http://www.w3.org/2000/svg'><desc/></svg>"
+		).documentElement;
+	} catch ( ex ) {
+		svgTree = jQuery.parseXML(
+			"<svg version='1.1' xmlns='http://www.w3.org/2000/svg'><desc/></svg>"
+		).documentElement;
+	}
+
+	assert.strictEqual( Sizzle.isXML( xmlTree ), true, "XML element" );
+	assert.strictEqual( Sizzle.isXML( xmlTree.firstChild ), true, "XML child element" );
+
+	assert.strictEqual( Sizzle.isXML( svgTree ), true, "SVG root element" );
+	assert.strictEqual( Sizzle.isXML( svgTree.firstChild ), true, "SVG child element" );
+
+	assert.strictEqual( Sizzle.isXML( htmlTree ), false, "disconnected div element" );
+	assert.strictEqual( Sizzle.isXML( htmlTree.firstChild ), supportsSVG,
+		"disconnected HTML-embedded SVG root element" );
+
+	// Support: IE 7 only
+	// The DOM under foreign elements can be incomplete
+	if ( htmlTree.firstChild.firstChild ) {
+		assert.strictEqual( Sizzle.isXML( htmlTree.firstChild.firstChild ), supportsSVG,
+			"disconnected HTML-embedded SVG child element" );
+	} else {
+		assert.ok( true, "Cannot test an incomplete DOM" );
+	}
+
+	document.getElementById( "qunit-fixture" ).appendChild( htmlTree );
+	assert.strictEqual( Sizzle.isXML( htmlTree ), false, "connected div element" );
+	assert.strictEqual( Sizzle.isXML( htmlTree.firstChild ), supportsSVG,
+		"connected HTML-embedded SVG root element" );
+
+	// Support: IE 7 only
+	// The DOM under foreign elements can be incomplete
+	if ( htmlTree.firstChild.firstChild ) {
+		assert.strictEqual( Sizzle.isXML( htmlTree.firstChild.firstChild ), supportsSVG,
+			"disconnected HTML-embedded SVG child element" );
+	} else {
+		assert.ok( true, "Cannot test an incomplete DOM" );
+	}
+} );
+
+QUnit.test( "Sizzle.uniqueSort", function( assert ) {
 	assert.expect( 14 );
 
 	function Arrayish( arr ) {
@@ -214,16 +275,16 @@ QUnit.test("Sizzle.uniqueSort", function( assert ) {
 	var i, tests,
 		detached = [],
 		body = document.body,
-		fixture = document.getElementById("qunit-fixture"),
-		detached1 = document.createElement("p"),
-		detached2 = document.createElement("ul"),
-		detachedChild = detached1.appendChild( document.createElement("a") ),
-		detachedGrandchild = detachedChild.appendChild( document.createElement("b") );
+		fixture = document.getElementById( "qunit-fixture" ),
+		detached1 = document.createElement( "p" ),
+		detached2 = document.createElement( "ul" ),
+		detachedChild = detached1.appendChild( document.createElement( "a" ) ),
+		detachedGrandchild = detachedChild.appendChild( document.createElement( "b" ) );
 
 	for ( i = 0; i < 12; i++ ) {
-		detached.push( document.createElement("li") );
-		detached[i].id = "detached" + i;
-		detached2.appendChild( document.createElement("li") ).id = "detachedChild" + i;
+		detached.push( document.createElement( "li" ) );
+		detached[ i ].id = "detached" + i;
+		detached2.appendChild( document.createElement( "li" ) ).id = "detachedChild" + i;
 	}
 
 	tests = {
@@ -249,16 +310,16 @@ QUnit.test("Sizzle.uniqueSort", function( assert ) {
 		},
 		"Detached children": {
 			input: [
-				detached2.childNodes[3],
-				detached2.childNodes[0],
-				detached2.childNodes[2],
-				detached2.childNodes[1]
+				detached2.childNodes[ 3 ],
+				detached2.childNodes[ 0 ],
+				detached2.childNodes[ 2 ],
+				detached2.childNodes[ 1 ]
 			],
 			expected: [
-				detached2.childNodes[0],
-				detached2.childNodes[1],
-				detached2.childNodes[2],
-				detached2.childNodes[3]
+				detached2.childNodes[ 0 ],
+				detached2.childNodes[ 1 ],
+				detached2.childNodes[ 2 ],
+				detached2.childNodes[ 3 ]
 			]
 		},
 		"Attached/detached mixture": {
@@ -280,8 +341,8 @@ QUnit.test("Sizzle.uniqueSort", function( assert ) {
 			test.expected,
 			label + " (quasi-array)"
 		);
-	});
-});
+	} );
+} );
 
 testIframeWithCallback( "Sizzle.uniqueSort works cross-window (jQuery #14381)", "mixed_sort.html",
 	function( actual, expected, message ) {
